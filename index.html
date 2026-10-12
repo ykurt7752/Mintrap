@@ -1,310 +1,104 @@
 <!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MindTrap — Zihin Tuzağı</title>
-<style>
-*{box-sizing:border-box}
-:root{color-scheme:dark;--bg:#101222;--panel:#1a1e34;--border:#343955;--text:#f2f4ff;--muted:#b2b8d1;--mint:#92efd2;--purple:#bcaaff}
-body{margin:0;background:radial-gradient(ellipse at top,#292143,var(--bg) 60%);color:var(--text);font-family:system-ui,-apple-system,sans-serif;min-height:100vh}
-main{max-width:570px;margin:auto;padding:24px 18px 40px}
-button{font:inherit;cursor:pointer;border:1px solid var(--border);border-radius:14px;background:#242940;color:var(--text);padding:13px 16px;min-height:48px;touch-action:manipulation}
-button:hover{border-color:var(--purple)}
-button:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
-button:disabled{opacity:.4;cursor:default}
-.primary{background:var(--mint);color:#10271f;border-color:var(--mint);font-weight:750}
-.secondary{background:transparent}
-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:25px}
-.brand{font-weight:850;letter-spacing:2px;font-size:19px}
-.logo{color:var(--mint)}
-.small{font-size:13px;color:var(--muted);line-height:1.6}
-h1{font-size:clamp(30px,7vw,42px);line-height:1.12;margin:16px 0}
-h2{font-size:25px;margin:12px 0}
-p{line-height:1.65}
-.eyebrow{color:var(--mint);text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:750}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:22px;padding:22px;margin:18px 0}
-.hero{padding:28px 24px;background:linear-gradient(145deg,#302748,#182c36)}
-.hero p{color:#d1d5e7}
-.hero .primary{width:100%;margin-top:8px}
-.tags{display:flex;gap:8px;flex-wrap:wrap}
-.tag{font-size:12px;border:1px solid var(--border);border-radius:20px;padding:6px 10px;color:var(--muted)}
-.progress{height:6px;background:#30344c;border-radius:8px;margin:12px 0 20px;overflow:hidden}
-.progress div{height:100%;background:var(--mint);transition:width .3s}
-.levels{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.level-button{text-align:left;padding:15px;display:flex;flex-direction:column;gap:7px;background:var(--panel)}
-.level-button strong{font-size:14px}
-.level-number{color:var(--purple);font-size:12px;font-weight:750}
-.complete .level-number{color:var(--mint)}
-.topline{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.topline button{font-size:13px;padding:10px 13px}
-.rule{color:#d4d8e9;margin:12px 0 20px}
-.board{background:#111627;border-radius:18px;padding:22px 12px;margin:18px 0}
-.lamps{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}
-.lamp{width:51px;display:flex;flex-direction:column;align-items:center;gap:12px;font-size:12px;color:var(--muted)}
-.bulb{width:39px;height:39px;border:2px solid #4a516c;background:#23283e;border-radius:50%;display:grid;place-items:center;font-size:18px}
-.on .bulb{background:var(--mint);border-color:var(--mint);color:#153529;box-shadow:0 0 24px #92efd23b}
-.on{color:var(--mint)}
-.switches{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:22px}
-.switches button{padding:12px 7px;font-weight:700}
-.switches small{display:block;margin-top:5px;font-size:12px;font-weight:400;color:var(--muted)}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.actions button{flex:1;font-size:13px;padding:11px 8px}
-.status{min-height:30px;color:var(--muted);font-size:14px;line-height:1.6;margin:12px 0}
-.status.good{color:var(--mint)}
-.status.warn{color:#ffcd97}
-.hint{padding:15px;background:#2b2541;border-radius:14px;color:#e5dafd;font-size:14px;line-height:1.7;margin:12px 0}
-.solution{padding:16px;background:#16352f;border:1px solid #356257;border-radius:14px;line-height:1.7;font-size:14px;margin:12px 0}
-.number{font-size:66px;font-weight:800;text-align:center;letter-spacing:-3px;margin:10px}
-.target{text-align:center;color:var(--mint)}
-.operations{display:flex;justify-content:center;gap:10px;margin-top:22px}
-.operations button{font-size:22px;min-width:74px}
-.history{text-align:center;color:var(--muted);font-size:13px;line-height:1.8;overflow-wrap:anywhere;margin-top:18px}
-.clues{padding-left:22px;color:#d4d8e9;font-size:14px;line-height:1.9}
-.slots{display:flex;justify-content:center;gap:7px}
-.slot{padding:0;min-width:0;flex:1;max-width:66px;font-size:22px;height:58px;background:#27233e;border-color:#72618f}
-.pool{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:24px}
-.pool button{width:52px;font-size:20px;padding:8px}
-.slot-num{text-align:center;font-size:11px;color:var(--muted);margin-top:6px}
-.slot-wrap{flex:1;max-width:66px}
-.slot-wrap button{width:100%}
-.next{width:100%;margin-top:16px}
-.footer{font-size:12px;color:var(--muted);line-height:1.7;margin-top:24px}
-@media(max-width:360px){main{padding:18px 12px}.card{padding:17px}.lamp{width:42px}.lamps{gap:5px}.slot{font-size:18px}.levels{gap:7px}}
-</style>
-</head>
-<body>
-<main id="app"></main>
-<script>
-"use strict";
-const levels=[
-{
- title:"İlk Kıvılcım",type:"light",difficulty:"Isınma",n:3,start:0,
- masks:[3,6,4],max:2,solution:[0,2],
- intro:"Üç ışığı da en fazla 2 hamlede yak. Anahtarlar, altında yazan ışıkların durumunu tersine çevirir.",
- hints:["Yanan bir ışık da tekrar sönebilir. Anahtarın bütün etkilerini birlikte düşün.","1. anahtar ilk iki ışığı yakar. Son ışığı tek başına değiştiren anahtarı bul."],
- explanation:"1 → 3. İlk anahtar 1 ve 2’yi yakar; üçüncü anahtar 3’ü yakar. Üç ışık da iki hamlede yanar."
-},
-{
- title:"Sessiz Kuyruk",type:"order",difficulty:"Isınma",items:"ABCD",answer:"DBAC",
- intro:"Kartları soldan sağa sıralayarak bütün ipuçlarını aynı anda sağla. Bir karta dokun; kaldırmak için yerleştirdiğin karta tekrar dokun.",
- clues:["B, A’dan önce.","C, A’nın hemen ardından.","D, B’den önce."],
- valid:p=>p.indexOf("B")<p.indexOf("A")&&p.indexOf("C")===p.indexOf("A")+1&&p.indexOf("D")<p.indexOf("B"),
- hints:["A ve C’yi birbirinden ayrılmayan bir çift olarak düşün.","Öncelik zinciri D → B → A → C."],
- explanation:"D → B → A → C. D, B’den; B, A’dan önce gelir. C’nin A’ya bitişik olması bütün sırayı belirler."
-},
-{
- title:"19’a Giden Yol",type:"number",difficulty:"Isınma",start:1,target:19,max:4,
- ops:[["+3",x=>x+3],["×2",x=>x*2]],solution:[0,1,1,0],
- intro:"1’den başlayarak 19’a en fazla 4 işlemde ulaş. İşlemler sırayla uygulanır; her düğmeye dokunuş bir hamledir.",
- hints:["Hedeften geriye düşün: 19’a hangi işlemle ulaşabilirsin?","Son işlem +3 ise bir önceki sayı 16 olmalı."],
- explanation:"1 → +3 → 4 → ×2 → 8 → ×2 → 16 → +3 → 19. Dört hamle yeterlidir; daha kısa bir yol yoktur."
-},
-{
- title:"Ters Bağlantı",type:"light",difficulty:"Orta",n:4,start:8,
- masks:[3,6,12,8],max:3,solution:[0,2,3],
- intro:"Dört ışığı da en fazla 3 hamlede yak. 4. ışık başlangıçta açık. Bazen ilerlemek için açık bir ışığı söndürmek gerekir.",
- hints:["Aynı ışığa iki kez etki edersen başlangıç durumuna döner.","1. anahtar ilk iki ışığı çözer. 3. ve 4. anahtarın ortak etkisini düşün."],
- explanation:"1 → 3 → 4. 1, ilk iki ışığı yakar. 3, üçüncüyü yakarken dördüncüyü söndürür. 4, son ışığı yeniden yakar. Bu anahtarların sırası değişebilir."
-},
-{
- title:"Aradaki Boşluk",type:"order",difficulty:"Orta",items:"ABCDE",answer:"EBCAD",
- intro:"Beş kartı sırala. “İki sıra sonra” demek, arada tam bir kart bulunması demektir.",
- clues:["A, B’den iki sıra sonra.","C, A’nın hemen önünde.","E, B’den önce.","D, A’dan sonra."],
- valid:p=>p.indexOf("A")===p.indexOf("B")+2&&p.indexOf("C")===p.indexOf("A")-1&&p.indexOf("E")<p.indexOf("B")&&p.indexOf("D")>p.indexOf("A"),
- hints:["İlk iki ipucu birlikte üç kartlık bir blok oluşturur.","Blok B–C–A. E bloktan önce, D bloktan sonra olmalı."],
- explanation:"E → B → C → A → D. B ile A’nın arasını C doldurur. E’nin önce, D’nin sonra gelmesi tek doğru düzeni verir."
-},
-{
- title:"Üç Yönlü Makine",type:"number",difficulty:"Orta",start:2,target:24,max:4,
- ops:[["×3",x=>x*3],["−2",x=>x-2],["+4",x=>x+4]],solution:[0,1,2,0],
- intro:"2’den 24’e en fazla 4 işlemde ulaş. Üç işlemden istediğini tekrar kullanabilirsin. Birden fazla doğru yol vardır.",
- hints:["Son işlem ×3 olursa önce 8’e ulaşmalısın.","2 → 6 → 4 → 8 yolunu hangi işlemler oluşturur?"],
- explanation:"Bir çözüm: 2 → ×3 → 6 → −2 → 4 → +4 → 8 → ×3 → 24. Başka bir çözüm: 2 → +4 → 6 → −2 → 4 → +4 → 8 → ×3 → 24. Kurala uyan bütün yollar kabul edilir."
-},
-{
- title:"Zincir Tepkisi",type:"light",difficulty:"Zor",n:5,start:18,
- masks:[3,6,12,24,16],max:4,solution:[0,1,3,4],
- intro:"Beş ışığı da en fazla 4 hamlede yak. 2 ve 5 başlangıçta açık. Bağlantıları incele; aynı ışığa gelen etkiler birbirini silebilir.",
- hints:["1. ışığı yalnızca 1. anahtar değiştiriyor. Bu yüzden onu kullanmalısın.","1 ve 2’yi kullandıktan sonra 3. anahtara ihtiyacın kalmaz. Sağ tarafta 4 ve 5’i düşün."],
- explanation:"1 → 2 → 4 → 5. 1. anahtar 1’i yakıp 2’yi söndürür. 2. anahtar 2 ve 3’ü yakar. 4. anahtar 4’ü yakıp 5’i söndürür. 5. anahtar 5’i geri yakar."
-},
-{
- title:"Altılı Şifre",type:"order",difficulty:"Zor",items:"ABCDEF",answer:"EAFCDB",
- intro:"Altı kart ve beş ipucu. Tek doğru sıralamayı bul. Önce kesin konumları, ardından birbirine bağlı kartları yerleştirmeyi dene.",
- clues:["B, son sırada.","D, B’nin hemen önünde.","F, E’den iki sıra sonra.","A, E’nin hemen ardından.","C, F’den sonra."],
- valid:p=>p[5]==="B"&&p.indexOf("D")===p.indexOf("B")-1&&p.indexOf("F")===p.indexOf("E")+2&&p.indexOf("A")===p.indexOf("E")+1&&p.indexOf("C")>p.indexOf("F"),
- hints:["Son iki yer D–B. E ve F arasındaki yeri A doldurur.","E–A–F üçlüsünden sonra C için de bir yer kalmalı."],
- explanation:"E → A → F → C → D → B. D ve B son iki yeri alır. E–A–F bloğunun ardından C gelmek zorundadır; böylece ilk dört yer de kesinleşir."
-},
-{
- title:"39’un Kilidi",type:"number",difficulty:"Derin mantık",start:4,target:39,max:5,
- ops:[["×2",x=>x*2],["+5",x=>x+5],["−3",x=>x-3]],solution:[0,0,1,0,2],
- intro:"4’ten 39’a en fazla 5 işlemde ulaş. Sürekli büyütmek yetmeyebilir. İşlemlerin sırası sonucu değiştirir.",
- hints:["Son adımı −3 olarak düşünürsen önce 42’ye ulaşman gerekir.","42’nin yarısı 21. 4’ten 16’ya, ardından 21’e nasıl gelirsin?"],
- explanation:"4 → ×2 → 8 → ×2 → 16 → +5 → 21 → ×2 → 42 → −3 → 39. Beş hamle gerekir; bu sınır içinde tek işlem dizisi budur."
-},
-{
- title:"Son Devre",type:"light",difficulty:"Final",n:6,start:18,
- masks:[3,6,12,24,48],max:4,solution:[0,1,3,4],
- intro:"Altı ışığı da en fazla 4 hamlede yak. 2 ve 5 açık. Her anahtar komşu iki ışığı değiştiriyor. Uçlardan başlayarak hangi anahtarların gerekli olduğunu çıkar.",
- hints:["1. ışık için 1. anahtar, 6. ışık için 5. anahtar zorunlu.","1’i kullanınca 2 söner; 2. anahtar onu geri yakar. 5’i kullanınca 5 söner; 4. anahtar onu geri yakar."],
- explanation:"1 → 2 → 4 → 5. Uçlardaki kapalı ışıklar 1 ve 5’i zorunlu kılar. Başlangıçta açık olan 2 ve 5’i korumak için 2 ve 4 de gerekir. 3. anahtar kullanılmaz. Dört anahtarın sırası değişebilir."
-}
-];
+<html lang="tr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101222"><meta name="description" content="MindTrap: 20 logic levels and a daily puzzle. Türkçe ve English."><title>MindTrap — Zihin Tuzağı</title><style>*{box-sizing:border-box} :root{color-scheme:dark;--bg:#101222;--panel:#1a1e34;--border:#363b57;--text:#f2f4ff;--muted:#b8bed7;--mint:#92efd2;--purple:#bcaaff}body{margin:0;background:radial-gradient(ellipse at top,#302448,var(--bg) 65%);color:var(--text);font-family:system-ui,-apple-system,sans-serif;min-height:100vh}main{max-width:590px;margin:auto;padding:24px 18px max(40px,env(safe-area-inset-bottom))}button{font:inherit;cursor:pointer;border:1px solid var(--border);border-radius:14px;background:#252a42;color:var(--text);padding:13px 15px;min-height:48px;touch-action:manipulation}button:hover{border-color:var(--purple)}button:focus-visible{outline:3px solid var(--mint);outline-offset:3px}button:disabled{opacity:.42;cursor:default}.primary{background:var(--mint);color:#112b22;border-color:var(--mint);font-weight:750}.secondary{background:transparent}.full{width:100%;margin-top:15px}header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:25px}.brand{font-weight:850;letter-spacing:2px;font-size:19px}.brand span{color:var(--mint)}small{font-size:12px;color:var(--muted);line-height:1.7}header small{font-size:11px}.language{display:flex;border:1px solid var(--border);border-radius:13px;padding:3px;gap:2px}.language button{padding:7px 10px;font-size:12px;min-height:40px;border:0;border-radius:9px;background:transparent}.language button.selected{background:var(--mint);color:#123429;font-weight:800}h1{font-size:clamp(30px,7vw,43px);line-height:1.14;margin:18px 0;letter-spacing:-1px}h2{font-size:25px;margin:14px 0;line-height:1.3}p{line-height:1.7}.eyebrow{color:var(--mint);letter-spacing:1.4px;font-size:11px;font-weight:750;text-transform:uppercase}.card{background:var(--panel);border:1px solid var(--border);border-radius:22px;padding:22px;margin:18px 0}.hero{padding:27px 24px;background:linear-gradient(145deg,#342947,#193039)}.hero p,.daily p{color:#d5d9eb}.tags{display:flex;gap:8px;flex-wrap:wrap}.tags span{font-size:12px;border:1px solid var(--border);border-radius:20px;padding:6px 10px;color:var(--muted)}.daily{border-color:#3c675d;background:linear-gradient(150deg,#17322f,#1a2035)}.daily h2{font-size:22px}.daily button{font-size:12px;padding:10px}.date{font-size:12px;color:var(--muted);white-space:nowrap}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.row small{text-align:right}.row>.secondary{font-size:13px}.progress{height:6px;background:#30344c;border-radius:8px;margin:14px 0 23px;overflow:hidden}.progress div{height:100%;background:var(--mint);transition:width .25s}.level-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.level-button{text-align:left;padding:15px;display:flex;flex-direction:column;gap:8px;background:var(--panel)}.level-button strong{font-size:14px;line-height:1.35}.level-button>span{font-size:11px;font-weight:750;color:var(--purple)}.complete>span{color:var(--mint)}.rule{color:#d6daec;font-size:15px}.board{background:#111627;border-radius:18px;padding:22px 12px;margin:20px 0}.lamps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px 6px;justify-items:center}.lamp{display:flex;flex-direction:column;align-items:center;gap:8px}.bulb{width:40px;height:40px;border:2px solid #4a516c;background:#252a42;border-radius:50%;display:grid;place-items:center;font-size:18px;color:#b8bed7}.on .bulb{background:var(--mint);border-color:var(--mint);color:#153529;box-shadow:0 0 24px #92efd235}.on small{color:var(--mint)}.switches{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:25px}.switches button{font-size:14px;font-weight:700;padding:12px 6px}.switches small{display:block;font-weight:400;margin-top:5px}.history{text-align:center;font-size:13px;line-height:1.85;color:var(--muted);overflow-wrap:anywhere;margin-top:20px}.number{font-size:66px;font-weight:800;text-align:center;letter-spacing:-3px;margin:12px}.target{text-align:center;color:var(--mint);font-weight:650}.operations{display:flex;justify-content:center;gap:10px;margin-top:20px}.operations button{font-size:23px;min-width:74px}.clues{padding-left:22px;color:#d4d8e9;font-size:14px;line-height:1.95}.slots{display:flex;justify-content:center;gap:6px}.slots>div{flex:1;min-width:0;max-width:66px;text-align:center}.slot{width:100%;padding:0;font-size:21px;height:55px;background:#29243f;border-color:#796691}.slots small{font-size:11px}.pool{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:25px}.pool button{width:50px;font-size:20px;padding:8px}.status{min-height:30px;color:var(--muted);font-size:14px;line-height:1.65;margin:14px 0}.good{color:var(--mint)}.warning{color:#ffce9f;font-size:13px;line-height:1.7}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1;font-size:12px;padding:11px 7px}.hint{padding:16px;background:#2b2541;border-radius:14px;color:#e5dafd;font-size:14px;line-height:1.7;margin:14px 0}.solution{padding:17px;background:#17352e;border:1px solid #356257;border-radius:14px;line-height:1.75;font-size:14px;margin:15px 0}.solution p{overflow-wrap:anywhere}.footer{font-size:12px;color:var(--muted);line-height:1.8;margin-top:25px}@media(max-width:360px){main{padding:18px 12px 40px}.card{padding:18px}.brand{font-size:16px}.slot{font-size:18px}.level-grid{gap:7px}.row{gap:7px}.daily .row{flex-wrap:wrap}}
+</style></head><body><main id="app"></main><noscript>MindTrap için JavaScript açık olmalı. Enable JavaScript to play MindTrap.</noscript><script>'use strict';
+const pair=(tr,en)=>[tr,en];
+const levels=[];
+function light(title,n,start,masks,solution,hints,why){levels.push({type:'light',title,n,start,masks,solution,max:solution.length,hints,why});}
+function number(title,start,target,ops,solution,hints,why){levels.push({type:'number',title,start,target,ops,solution,max:solution.length,hints,why});}
+function order(title,items,rules,answer,hints,why){levels.push({type:'order',title,items,rules,answer,hints,why});}
+const plus=n=>['+'+n,x=>x+n],times=n=>['×'+n,x=>x*n],minus=n=>['−'+n,x=>x-n];
+light(pair('İlk Kıvılcım','First Spark'),3,0,[3,6,4],[0,2],[pair('Bir anahtar birkaç ışığı değiştirebilir.','One switch can affect several lights.'),pair('İlk iki ışığı birlikte, sonuncuyu tek başına yak.','Light the first two together, then the last one alone.')],pair('1. anahtar ilk iki ışığı, 3. anahtar son ışığı yakar.','Switch 1 lights the first two; switch 3 lights the last.'));
+order(pair('Sessiz Kuyruk','Silent Queue'),'ABCD',[['before','B','A'],['offset','A','C',1],['before','D','B']],'DBAC',[pair('A ve C bitişik bir çift.','A and C form an adjacent pair.'),pair('D, B’den önce; B de A’dan önce.','D precedes B, and B precedes A.')],pair('Öncelik zinciri tek doğru düzeni belirler.','The chain of precedence determines a unique order.'));
+number(pair('19’a Giden Yol','The Road to 19'),1,19,[plus(3),times(2)],[0,1,1,0],[pair('Hedeften geriye düşün.','Work backward from the target.'),pair('Son adım +3 ise önce 16 gerekir.','If the last step is +3, you need 16 first.')],pair('Toplama işleminin çarpmadan önce veya sonra olması sonucu değiştirir.','Adding before or after multiplication changes the result.'));
+light(pair('Ters Bağlantı','Reverse Connection'),4,8,[3,6,12,8],[0,2,3],[pair('Bazen açık bir ışığı geçici olarak söndürmelisin.','Sometimes a lit lamp must go dark temporarily.'),pair('1’i dene; ardından 3 ve 4’ün ortak etkisini düşün.','Try 1, then consider the combined effect of 3 and 4.')],pair('3. anahtar son ışığı söndürür; 4 onu geri yakar.','Switch 3 turns off the last lamp; switch 4 restores it.'));
+order(pair('Aradaki Boşluk','The Gap Between'),'ABCDE',[['offset','B','A',2],['offset','C','A',1],['before','E','B'],['before','A','D']],'EBCAD',[pair('B ile A arasında bir kart var.','There is one card between B and A.'),pair('B–C–A bloğunun dışındaki kartları yerleştir.','Place the remaining cards around the B–C–A block.')],pair('E bloktan önce, D bloktan sonra gelmelidir.','E must precede the block; D must follow it.'));
+number(pair('Üç Yönlü Makine','Three-Way Machine'),2,24,[times(3),minus(2),plus(4)],[0,1,2,0],[pair('Son adım ×3 olursa önce 8 gerekir.','If the last step is ×3, you need 8 first.'),pair('6’dan 4’e, sonra 8’e git.','Go from 6 to 4, then to 8.')],pair('Birden fazla geçerli yol vardır; bu sadece bir örnek.','Multiple valid paths exist; this is just one example.'));
+light(pair('Zincir Tepkisi','Chain Reaction'),5,18,[3,6,12,24,16],[0,1,3,4],[pair('1. ışığı yalnızca 1. anahtar değiştirir.','Only switch 1 affects lamp 1.'),pair('1 ve 2’den sonra sağ tarafta 4 ve 5’i düşün.','After 1 and 2, consider switches 4 and 5 on the right.')],pair('Başlangıçta açık olan 2 ve 5’i yeniden yakmak gerekir.','Initially lit lamps 2 and 5 must be restored.'));
+order(pair('Altılı Şifre','Six-Part Code'),'ABCDEF',[['pos','B',6],['offset','D','B',1],['offset','E','F',2],['offset','E','A',1],['before','F','C']],'EAFCDB',[pair('Son iki yer D–B.','The last two positions are D–B.'),pair('E–A–F bloğundan sonra C için yer bırak.','Leave space for C after the E–A–F block.')],pair('Sabit son iki konum, üçlü blok ve C’nin yeri bütün sırayı belirler.','The fixed tail, three-card block and position of C determine the order.'));
+number(pair('39’un Kilidi','The Lock of 39'),4,39,[times(2),plus(5),minus(3)],[0,0,1,0,2],[pair('Son adım −3 ise önce 42 gerekir.','If the last step is −3, you need 42 first.'),pair('42’nin yarısı 21; 21’den önce 16’yı düşün.','Half of 42 is 21; consider 16 before 21.')],pair('Önce büyüt, sonra ekle, yeniden büyüt ve düzelt.','Grow, add, grow again, then adjust.'));
+light(pair('Son Devre','The Final Circuit'),6,18,[3,6,12,24,48],[0,1,3,4],[pair('Uçlardaki ışıkları yalnızca uç anahtarlar değiştirir.','Only the end switches affect the end lamps.'),pair('1 ve 5 zorunlu; açık ışıkları korumak için 2 ve 4 gerekir.','1 and 5 are required; 2 and 4 preserve the lit lamps.')],pair('Ortadaki 3. anahtarı kullanmadan devre tamamlanır.','The circuit can be completed without switch 3.'));
+light(pair('Çapraz Akım','Cross Current'),5,25,[5,10,20,9,16],[0,1,3],[pair('3. ışık kapalı; onu hangi anahtarlar değiştiriyor?','Lamp 3 is off. Which switches affect it?'),pair('1, 2 ve 4’ün toplam etkisini incele.','Consider the combined effect of 1, 2 and 4.')],pair('Uzak ışıklar bağlıdır. İki değişim birbirini iptal eder.','Distant lamps are connected. Two toggles cancel each other.'));
+number(pair('50’ye Sıçra','Jump to 50'),3,50,[times(2),plus(7),minus(4)],[1,0,1,0,2],[pair('50’den önce 54’ü hedeflemeyi dene.','Try aiming for 54 just before 50.'),pair('54’ün yarısı 27. 20’ye 7 ekleyebilirsin.','Half of 54 is 27. You can add 7 to 20.')],pair('Büyük adımları doğru sırayla küçük bir düzeltme izler.','Large steps in the right order are followed by a small correction.'));
+order(pair('Ortadaki Tanık','The Middle Witness'),'ABCDE',[['offset','C','E',2],['offset','A','E',1],['before','E','B'],['offset','B','D',1]],'CAEBD',[pair('C ile E arasına A yerleşir.','A fits between C and E.'),pair('C–A–E bloğunu B–D izler.','The C–A–E block is followed by B–D.')],pair('İki blok bütün beş konumu doldurur.','Two blocks fill all five positions.'));
+light(pair('Üçlü Düğüm','Triple Knot'),6,36,[7,6,12,24,48,32],[0,2,4,5],[pair('1. anahtar üç ışığa birden etki eder.','Switch 1 affects three lamps at once.'),pair('1 ve 3’ten sonra 5 ve 6’yı düşün.','After 1 and 3, consider 5 and 6.')],pair('Üçlü etkiyi sağ taraftaki çift ve tek etkilerle dengele.','Balance the triple effect using the pair and single effects on the right.'));
+number(pair('105’in Anahtarı','The Key to 105'),5,105,[times(3),minus(4),plus(2)],[0,1,0,2,0],[pair('105’e son adımda ×3 ile ulaşılabilir.','You can reach 105 with ×3 as the final step.'),pair('35’ten önce 33, ondan önce 11 gerekir.','Before 35 you need 33; before that, 11.')],pair('Çarpma, çıkarma ve toplama doğru sırada birleşir.','Multiplication, subtraction and addition combine in the right order.'));
+order(pair('Yer Daralıyor','Running Out of Space'),'ABCDEF',[['pos','C',6],['offset','E','C',1],['offset','D','F',2],['offset','F','A',1],['before','B','F']],'DBFAEC',[pair('E–C son iki konumu alır.','E–C occupy the final two positions.'),pair('D ile F arasına B yerleşmeli; A da F’nin ardında.','B fits between D and F, with A right after F.')],pair('Son iki yer sabit olduğundan D–B–F–A bloğu başa yerleşir.','The fixed tail forces D–B–F–A into the first four positions.'));
+light(pair('Yedi Işığın Dengesi','Balance of Seven'),7,18,[3,6,12,24,48,96,64],[0,1,3,4,6],[pair('Bağlantıları soldan sağa takip et.','Follow the connections from left to right.'),pair('1, 2, 4 ve 5’ten sonra son ışık için 7 gerekir.','After 1, 2, 4 and 5, use 7 for the final lamp.')],pair('Bazı ışıklar iki kez değişerek başlangıç durumlarını korur.','Some lamps toggle twice and preserve their initial state.'));
+number(pair('101’e Dolambaç','Detour to 101'),2,101,[times(2),plus(9),minus(5)],[1,0,0,1,0,2],[pair('Son adım −5 ise önce 106 gerekir.','If the last step is −5, you need 106 first.'),pair('106 → 53 → 44 şeklinde geriye düşün.','Work backward: 106 → 53 → 44.')],pair('İki +9 işleminin yerleri sonucu belirler.','The positions of the two +9 operations determine the result.'));
+order(pair('Yedili Muhakeme','Seven-Part Deduction'),'ABCDEFG',[['pos','G',7],['offset','D','G',1],['offset','F','A',2],['offset','F','C',1],['offset','A','E',1],['before','E','B']],'FCAEBDG',[pair('D–G son iki konumda.','D–G occupy the final two positions.'),pair('F–C–A–E bloğundan sonra B için yer bırak.','Leave space for B after the F–C–A–E block.')],pair('Dörtlü blok, B ve sabit son çift tek sıralamayı verir.','The four-card block, B and fixed final pair yield one order.'));
+light(pair('Büyük Devre','The Grand Circuit'),8,134,[3,6,12,24,48,96,192,128],[0,1,2,4,6,7],[pair('Önce 1. ışığı çöz; her adımda komşu etkiyi takip et.','Start with lamp 1 and follow each neighboring effect.'),pair('1, 2, 3 ve 5’ten sonra sağ uçta 7 ve 8 gerekir.','After 1, 2, 3 and 5, use 7 and 8 on the right.')],pair('Sol uçtan başlayarak hangi anahtarın gerekli olduğu sırayla çıkarılır.','Starting from the left, each required switch can be deduced in turn.'));
 
-const app=document.getElementById("app");
-let completed=[];
+const ui={
+ subtitle:pair('Zihin Tuzağı','Mind Puzzles'),tagline:pair('Hızını değil, düşünceni sına.','Challenge your thinking, not your speed.'),hero:pair('20 mantık bölümü ve her gün yeni bir devre. Bağlantıları keşfet, sıraları kur, hamlelerini planla.','20 logic levels and a new circuit each day. Discover connections, arrange cards and plan your moves.'),noTimer:pair('Süre baskısı yok','No timer'),free:pair('Ücretsiz prototip','Free prototype'),continue:pair('Oyuna başla / devam et','Play / continue'),levels:pair('Bölümler','Levels'),done:pair('tamamlandı','completed'),daily:pair('Günlük bulmaca','Daily puzzle'),dailyDesc:pair('Cihazının tarihine göre her gün farklı bir ışık devresi.','A different light circuit each day, based on your device date.'),todayDone:pair('Bugünün bulmacası çözüldü','Today’s puzzle is solved'),dailyPlay:pair('Bugünün devresini aç','Open today’s circuit'),streak:pair('Günlük seri','Daily streak'),days:pair('gün','days'),back:pair('Bölümler','Levels'),level:pair('Bölüm','Level'),light:pair('Bağlı ışıklar','Linked lights'),number:pair('Sayı makinesi','Number machine'),order:pair('Mantık sıralaması','Logic order'),warm:pair('Isınma','Warm-up'),medium:pair('Orta','Intermediate'),hard:pair('Zor','Hard'),deep:pair('Derin mantık','Deep logic'),lightRule:pair('Bütün ışıkları verilen hamle sınırı içinde yak. Her anahtar, altında yazan ışıkların açık/kapalı durumunu tersine çevirir.','Turn every lamp on within the move limit. Each switch toggles the lamps listed below it.'),orderRule:pair('Kartlara dokunarak soldan sağa sırala. Bir kartı kaldırmak için yerleştirdiğin karta dokun. Bütün ipuçlarını aynı anda sağla.','Tap cards to arrange them from left to right. Tap a placed card to remove it. Satisfy all clues at once.'),numberRule:pair('Başlangıç sayısından hedefe, verilen hamle sınırı içinde ulaş. Her dokunuş bir işlemdir; işlemler sırayla uygulanır.','Reach the target from the starting number within the move limit. Each tap applies one operation, in sequence.'),max:pair('Hamle sınırı','Move limit'),lamp:pair('Işık','Lamp'),on:pair('Açık','On'),off:pair('Kapalı','Off'),switch:pair('Anahtar','Switch'),target:pair('Hedef','Target'),start:pair('Başlangıç','Start'),move:pair('Hamle','Move'),check:pair('Sıralamayı kontrol et','Check order'),ready:pair('Düşünmek için zamanın var. Denemeye başlayabilirsin.','Take your time. Try an idea.'),success:pair('Çözüldü! Bağlantıyı buldun.','Solved! You found the connection.'),limit:pair('Hamle sınırına ulaştın. Geri alabilir veya baştan deneyebilirsin.','Move limit reached. Undo a move or restart.'),wrong:pair('Henüz bütün ipuçları sağlanmıyor. Kartları yeniden düzenle.','Some clues are not satisfied yet. Rearrange the cards.'),undo:pair('Geri al','Undo'),reset:pair('Baştan','Restart'),hint:pair('İpucu','Hint'),reveal:pair('Çözümü gör · spoiler','Reveal solution · spoiler'),logic:pair('Çözümün mantığı','Solution explained'),sample:pair('Bir çözüm','One solution'),spoilerNote:pair('Çözümü görmek bölümü tamamlamaz. Kendin uygulayabilirsin.','Revealing a solution does not complete the level. Try applying it yourself.'),next:pair('Sonraki bölüme geç','Next level'),finish:pair('Sonuçlarını gör','View results'),final:pair('20 bölüm tamamlandı!','All 20 levels completed!'),finalText:pair('Bağlantıları çözdün, ipuçlarını birleştirdin ve sınırlı hamleleri planladın. Yarın günlük devre için geri gelebilirsin.','You decoded connections, combined clues and planned limited moves. Come back for tomorrow’s daily circuit.'),footer:pair('Test için bütün bölümler açık. Reklam, ödeme ve veri gönderimi yok. İlerlemen yalnızca bu tarayıcıda saklanır; farklı cihazlara taşınmaz.','All levels are open for testing. No ads, payments or data transmission. Progress is stored only in this browser and does not sync across devices.'),storageFail:pair('Bu tarayıcı kayıt yapmaya izin vermiyor. Bu oturumda oynayabilirsin; ilerleme sayfa kapanınca kaybolabilir.','This browser does not allow saving. You can play, but progress may be lost when the page closes.'),midnight:pair('Yeni gün başladı. Günlük bulmacayı yeniden açarak bugünün devresine geçebilirsin.','A new day has started. Reopen the daily puzzle to play today’s circuit.'),remove:pair('Kartı kaldır','Remove card'),empty:pair('Boş yer','Empty slot')
+};
+let lang='tr',completed=[],dailyDone={},streak=0,lastDaily='',storageOK=true;
 try{
- const saved=JSON.parse(localStorage.getItem("mindtrap-prototype-v1")||"[]");
- if(Array.isArray(saved)) completed=[...new Set(saved.filter(n=>Number.isInteger(n)&&n>=0&&n<10))];
-}catch(e){}
-let current=0,state=null,message="",messageType="",hintCount=0,reveal=false,won=false;
-
-function persist(){
- try{localStorage.setItem("mindtrap-prototype-v1",JSON.stringify(completed));}catch(e){}
+ const old=JSON.parse(localStorage.getItem('mindtrap-prototype-v1')||'[]');
+ const saved=JSON.parse(localStorage.getItem('mindtrap-v02')||'null');
+ const validIds=a=>Array.isArray(a)?[...new Set(a.filter(n=>Number.isInteger(n)&&n>=0&&n<20))]:[];
+ completed=validIds(saved?saved.completed:old);
+ if(saved){lang=saved.lang==='en'?'en':'tr';dailyDone=saved.dailyDone&&typeof saved.dailyDone==='object'&&!Array.isArray(saved.dailyDone)?saved.dailyDone:{};streak=Number.isInteger(saved.streak)&&saved.streak>=0?saved.streak:0;lastDaily=typeof saved.lastDaily==='string'?saved.lastDaily:'';}
+ localStorage.setItem('mindtrap-storage-test','1');localStorage.removeItem('mindtrap-storage-test');
+}catch(e){storageOK=false;}
+const app=document.getElementById('app');
+let screen='home',current=0,state=null,hints=0,reveal=false,won=false,notice='',noticeKind='',activeDaily=null;
+const text=p=>Array.isArray(p)?p[lang==='en'?1:0]:p;
+const t=k=>text(ui[k]);
+function persist(){try{localStorage.setItem('mindtrap-v02',JSON.stringify({lang,completed,dailyDone,streak,lastDaily}));}catch(e){storageOK=false;}}
+function dateKey(d=new Date()){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function previousDay(key){const [y,m,d]=key.split('-').map(Number);const value=new Date(Date.UTC(y,m-1,d-1));return value.toISOString().slice(0,10);}
+function makeDaily(key){
+ const n=6,masks=[3,6,12,24,48,32],combinations=[];
+ for(let bits=1;bits<64;bits++){const indices=[];for(let i=0;i<6;i++)if(bits&(1<<i))indices.push(i);if(indices.length>=3&&indices.length<=5)combinations.push(indices);}
+ const [year,month,day]=key.split('-').map(Number);
+ const ordinal=Math.floor(Date.UTC(year,month-1,day)/86400000);
+ const solution=combinations[((ordinal*17)%combinations.length+combinations.length)%combinations.length];
+ let start=63;for(const i of solution)start^=masks[i];
+ return {type:'light',title:pair('Günün Devresi','Circuit of the Day'),n,start,masks,solution,max:solution.length,date:key,hints:[pair('Sol uçtan başlayıp ışıkların bağlantılarını takip et.','Start at the left and follow the connections.'),pair('İlk gerekli anahtar: '+(solution[0]+1)+'.','The first required switch is '+(solution[0]+1)+'.')],why:pair('Bir anahtarın iki kez kullanılması birbirini iptal eder. Gerekli anahtarları bul; sıranın önemi yok.','Using a switch twice cancels its effect. Find the required switches; their order does not matter.')};
 }
-function header(){
- return '<header><div class="brand"><span class="logo">◈</span> MINDTRAP</div><span class="small">Zihin Tuzağı · v0.1</span></header>';
-}
-function home(){
- state=null;
- app.innerHTML=header()+`
- <section class="card hero">
- <div class="eyebrow">Kısa keşifler · Derin mantık</div>
- <h1>Hızını değil,<br>düşünceni sına.</h1>
- <p>10 bölüm. Bağlı ışıklar, sessiz sıralamalar ve sayı makineleri. Kolay başla, bağlantıları keşfet, son devreyi çöz.</p>
- <div class="tags"><span class="tag">Süre baskısı yok</span><span class="tag">Reklam yok</span><span class="tag">10 ücretsiz bölüm</span></div>
- <button class="primary" data-action="continue">${completed.length===10?"Yeniden oyna":"Oyuna başla / devam et"} →</button>
- </section>
- <div class="topline"><strong>Bölümler</strong><span class="small">${completed.length} / 10 tamamlandı</span></div>
- <div class="progress"><div style="width:${completed.length*10}%"></div></div>
- <div class="levels">${levels.map((l,i)=>`
- <button class="level-button ${completed.includes(i)?"complete":""}" data-action="open" data-index="${i}">
- <span class="level-number">${completed.includes(i)?"✓":"◇"} ${String(i+1).padStart(2,"0")} · ${l.difficulty}</span>
- <strong>${l.title}</strong>
- <span class="small">${l.type==="light"?"Bağlı ışıklar":l.type==="order"?"Mantık sıralaması":"Sayı makinesi"}</span>
- </button>`).join("")}</div>
- <p class="footer">Nasıl oynanır? Düğmelere dokun; takılırsan kademeli ipuçlarını aç. Sıralama bölümlerinde kartları seçip “Kontrol et”e bas. Test edebilmen için bütün bölümler açık.<br><br>Bu ilk sürüm Türkçe. Ödeme veya reklam içermez. Tamamlanan bölümler, tarayıcı izin verirse bu cihazda hatırlanır.</p>`;
-}
-function start(i){
- current=i;
- const l=levels[i];
- state={value:l.start,sequence:[],history:[]};
- message="";messageType="";hintCount=0;reveal=false;won=false;
- draw();
-}
-function moves(){return state.history.length;}
-function saveWin(){
- won=true;message="Çözüldü! Bağlantıyı buldun.";messageType="good";
- if(!completed.includes(current)){completed.push(current);persist();}
-}
-function reached(){
- const l=levels[current];
- return l.type==="light"?state.value===(1<<l.n)-1:state.value===l.target;
-}
-function draw(){
- const l=levels[current];
- let board="";
- if(l.type==="light"){
-  board=`<div class="board">
-  <div class="lamps">${Array.from({length:l.n},(_,i)=>`
-  <div class="lamp ${state.value&(1<<i)?"on":""}">
-  <div class="bulb">${state.value&(1<<i)?"●":"○"}</div>
-  <span>Işık ${i+1}</span><span>${state.value&(1<<i)?"Açık":"Kapalı"}</span>
-  </div>`).join("")}</div>
-  <div class="switches">${l.masks.map((mask,i)=>`
-  <button data-action="switch" data-index="${i}" ${won||moves()>=l.max?"disabled":""}>
-  Anahtar ${i+1}
-  <small>↔ ${Array.from({length:l.n},(_,j)=>mask&(1<<j)?j+1:null).filter(Boolean).join(" · ")}</small>
-  </button>`).join("")}</div>
-  <div class="history">Hamle ${moves()} / ${l.max}${state.history.length?" · Anahtarlar: "+state.history.map(h=>h.index+1).join(" → "):""}</div>
-  </div>`;
- }else if(l.type==="number"){
-  board=`<div class="board">
-  <div class="target">HEDEF ${l.target}</div>
-  <div class="number">${state.value}</div>
-  <div class="operations">${l.ops.map((op,i)=>`<button data-action="operation" data-index="${i}" ${won||moves()>=l.max?"disabled":""}>${op[0]}</button>`).join("")}</div>
-  <div class="history">Hamle ${moves()} / ${l.max}<br>${l.start}${state.history.map(h=>" → "+l.ops[h.index][0]+" → "+h.after).join("")}</div>
-  </div>`;
- }else{
-  board=`<ul class="clues">${l.clues.map(c=>"<li>"+c+"</li>").join("")}</ul>
-  <div class="board">
-  <div class="slots">${[...l.items].map((_,i)=>`
-  <div class="slot-wrap"><button class="slot" data-action="remove" data-index="${i}" ${won||!state.sequence[i]?"disabled":""} aria-label="${i+1}. sıradaki ${state.sequence[i]||"boş"} kartı kaldır">${state.sequence[i]||"·"}</button><div class="slot-num">${i+1}</div></div>`).join("")}</div>
-  <div class="pool">${[...l.items].map(c=>`<button data-action="card" data-card="${c}" ${won||state.sequence.includes(c)?"disabled":""}>${c}</button>`).join("")}</div>
-  </div>
-  <button class="primary next" data-action="check" ${won||state.sequence.length!==l.items.length?"disabled":""}>Sıralamayı kontrol et</button>`;
- }
- app.innerHTML=header()+`
- <div class="topline"><button class="secondary" data-action="home">← Bölümler</button><span class="small">Bölüm ${current+1} / 10</span></div>
- <div class="progress"><div style="width:${(current+1)*10}%"></div></div>
- <div class="eyebrow">${l.difficulty} · ${l.type==="light"?"Bağlı ışıklar":l.type==="number"?"Sayı makinesi":"Mantık sıralaması"}</div>
- <h2>${l.title}</h2>
- <p class="rule">${l.intro}</p>
- ${board}
- <div class="status ${messageType}" role="status" aria-live="polite">${message||"Düşünmek için zamanın var. Denemeye başlayabilirsin."}</div>
- <div class="actions">
- <button data-action="undo" ${won||(l.type==="order"?!state.sequence.length:!moves())?"disabled":""}>↶ Geri al</button>
- <button data-action="reset">↻ Baştan</button>
- <button data-action="hint" ${hintCount>=l.hints.length?"disabled":""}>İpucu ${hintCount}/${l.hints.length}</button>
- </div>
- ${l.hints.slice(0,hintCount).map((h,i)=>`<div class="hint"><strong>İpucu ${i+1}</strong><br>${h}</div>`).join("")}
- ${won||reveal?`<div class="solution"><strong>${won?"✓ Çözümün mantığı":"Çözüm — spoiler"}</strong><br>${l.explanation}${reveal&&!won?"<br><br>Çözümü görmek bölümü tamamlamaz. Düğmeleri kullanarak kendin uygula.":""}</div>`:`<button class="secondary next" data-action="reveal">Çözümü gör · spoiler</button>`}
- ${won?`<button class="primary next" data-action="${current===9?"finish":"next"}">${current===9?(completed.length===10?"10 bölüm tamam! Sonuçlarını gör":"Bölümlere dön"):"Sonraki bölüme geç →"}</button>`:""}`;
-}
-function finish(){
- if(completed.length!==10){home();return;}
- app.innerHTML=header()+`
- <section class="card hero">
- <div class="eyebrow">Final devresi tamamlandı</div>
- <h1>10 / 10<br>Bağlantıları çözdün.</h1>
- <p>Önce örnekleri keşfettin, sonra sıraları kurdun ve sınırlı hamleleri planladın. Süre puanı yok: burada önemli olan akıl yürütmek.</p>
- <button class="primary" data-action="home">Bölümleri yeniden oyna</button>
- </section>
- <div class="card"><strong>Prototip için düşün</strong><p>En çok hangi bölüm düşündürdü? Hangi ipucu fazla açık ya da yetersizdi? Yeni bir bölümü oynamak ister miydin?</p><span class="small">Bu cevaplar otomatik olarak toplanmaz. Geri bildirimini sohbetten paylaşabilirsin.</span></div>`;
-}
-function act(action,index,card){
- if(action==="home"){home();return;}
- if(action==="continue"){start(levels.findIndex((_,i)=>!completed.includes(i))<0?0:levels.findIndex((_,i)=>!completed.includes(i)));return;}
- if(action==="open"){start(index);return;}
- if(!state)return;
- const l=levels[current];
- if(action==="reset"){start(current);return;}
- if(action==="next"){start(current+1);return;}
- if(action==="finish"){finish();return;}
- if(action==="hint"){hintCount=Math.min(hintCount+1,l.hints.length);draw();return;}
- if(action==="reveal"){reveal=true;draw();return;}
- if(won)return;
- message="";messageType="";
- if(action==="undo"){
-  if(l.type==="order")state.sequence.pop();
-  else if(state.history.length)state.value=state.history.pop().before;
- }else if(action==="card"){
-  if(l.type==="order"&&l.items.includes(card)&&!state.sequence.includes(card))state.sequence.push(card);
- }else if(action==="remove"){
-  if(l.type==="order")state.sequence.splice(index,1);
- }else if(action==="check"){
-  if(state.sequence.length===l.items.length){
-   if(l.valid(state.sequence))saveWin();
-   else{message="Henüz bütün ipuçları sağlanmıyor. Bir kartı kaldırıp farklı yere yerleştirmeyi dene.";messageType="warn";}
-  }
- }else if(action==="switch"||action==="operation"){
-  if(moves()>=l.max)return;
-  const before=state.value;
-  state.value=action==="switch"?state.value^l.masks[index]:l.ops[index][1](state.value);
-  state.history.push({index,before,after:state.value});
-  if(reached())saveWin();
-  else if(moves()===l.max){message="Hamle sınırına ulaştın. Geri alabilir veya baştan deneyebilirsin.";messageType="warn";}
- }
- draw();
-}
-app.addEventListener("click",e=>{
- const button=e.target.closest("button[data-action]");
- if(!button||button.disabled)return;
- act(button.dataset.action,Number(button.dataset.index),button.dataset.card);
-});
-home();
-</script>
-</body>
-</html>
+function active(){return current==='daily'?activeDaily:levels[current];}
+function kind(l){return t(l.type);}
+function difficulty(i){return i<3?t('warm'):i<6?t('medium'):i<10?t('hard'):t('deep');}
+function checkRule(p,r){if(r[0]==='before')return p.indexOf(r[1])<p.indexOf(r[2]);if(r[0]==='offset')return p.indexOf(r[2])-p.indexOf(r[1])===r[3];return p.indexOf(r[1])===r[2]-1;}
+function clue(r){if(r[0]==='before')return lang==='tr'?`${r[1]}, ${r[2]}’den önce.`:`${r[1]} is before ${r[2]}.`;if(r[0]==='pos')return lang==='tr'?`${r[1]}, ${r[2]}. sırada.`:`${r[1]} is in position ${r[2]}.`;return lang==='tr'?`${r[2]}, ${r[1]}’${r[1]==='A'?'dan':'den'} ${r[3]===1?'hemen sonra':r[3]+' sıra sonra (arada '+(r[3]-1)+' kart)'}.`:`${r[2]} is ${r[3]===1?'immediately after '+r[1]:r[3]+' positions after '+r[1]+' ('+(r[3]-1)+' card in between)'}.`;}
+function header(){return `<header><div><div class="brand"><span>◈</span> MINDTRAP</div><small>${t('subtitle')} · v0.2</small></div><div class="language" aria-label="Language"><button data-action="lang" data-lang="tr" aria-pressed="${lang==='tr'}" class="${lang==='tr'?'selected':''}">TR</button><button data-action="lang" data-lang="en" aria-pressed="${lang==='en'}" class="${lang==='en'?'selected':''}">EN</button></div></header>`;}
+function storageNote(){return storageOK?'':`<p class="warning">${t('storageFail')}</p>`;}
+function home(){screen='home';state=null;renderHome();}
+function renderHome(){const key=dateKey(),isDone=!!dailyDone[key];app.innerHTML=header()+`
+<section class="card hero"><div class="eyebrow">20 ${t('levels')} · TR / EN</div><h1>${t('tagline')}</h1><p>${t('hero')}</p><div class="tags"><span>${t('noTimer')}</span><span>${t('free')}</span></div><button class="primary full" data-action="continue">${t('continue')} →</button></section>
+<section class="card daily"><div class="row"><div class="eyebrow">◷ ${t('daily')}</div><span class="date">${key}</span></div><h2>${isDone?'✓ '+t('todayDone'):text(makeDaily(key).title)}</h2><p>${t('dailyDesc')}</p><div class="row"><small>${t('streak')}: ${lastDaily===key||lastDaily===previousDay(key)?streak:0} ${t('days')}</small><button data-action="daily">${t('dailyPlay')} →</button></div></section>
+<div class="row"><strong>${t('levels')}</strong><small>${completed.length} / 20 ${t('done')}</small></div><div class="progress"><div style="width:${completed.length*5}%"></div></div>
+<div class="level-grid">${levels.map((l,i)=>`<button class="level-button ${completed.includes(i)?'complete':''}" data-action="open" data-index="${i}"><span>${completed.includes(i)?'✓':'◇'} ${String(i+1).padStart(2,'0')} · ${difficulty(i)}</span><strong>${text(l.title)}</strong><small>${kind(l)}</small></button>`).join('')}</div><p class="footer">${t('footer')}</p>${storageNote()}`;}
+function start(i){current=i;screen='game';if(i==='daily')activeDaily=makeDaily(dateKey());const l=active();state={value:l.start,cards:[],history:[]};hints=0;reveal=false;won=false;notice='';noticeKind='';renderGame();}
+function moveCount(){return state.history.length;}
+function win(){won=true;notice='success';noticeKind='good';if(current==='daily'){const key=activeDaily.date;if(!dailyDone[key]){dailyDone[key]=true;if(!lastDaily||key>lastDaily){streak=lastDaily===previousDay(key)?streak+1:1;lastDaily=key;}}}else if(!completed.includes(current))completed.push(current);persist();}
+function reached(){const l=active();return state.value===(l.type==='light'?(1<<l.n)-1:l.target);}
+function solutionHtml(l){if(l.type==='order')return [...l.answer].join(' → ');if(l.type==='light')return l.solution.map(i=>`${t('switch')} ${i+1}`).join(' → ');let v=l.start;return String(v)+l.solution.map(i=>{v=l.ops[i][1](v);return ' → '+l.ops[i][0]+' → '+v;}).join('');}
+function renderGame(){const l=active(),limit=won||moveCount()>=l.max;let board='';
+if(l.type==='light'){board=`<div class="board"><div class="lamps">${Array.from({length:l.n},(_,i)=>`<div class="lamp ${state.value&(1<<i)?'on':''}"><div class="bulb">${state.value&(1<<i)?'●':'○'}</div><small>${i+1} · ${state.value&(1<<i)?t('on'):t('off')}</small></div>`).join('')}</div><div class="switches">${l.masks.map((m,i)=>`<button data-action="switch" data-index="${i}" ${limit?'disabled':''}>${t('switch')} ${i+1}<small>↔ ${Array.from({length:l.n},(_,j)=>m&(1<<j)?j+1:null).filter(Boolean).join(' · ')}</small></button>`).join('')}</div><div class="history">${t('move')} ${moveCount()} / ${l.max}${state.history.length?'<br>'+state.history.map(h=>h.index+1).join(' → '):''}</div></div>`;}
+else if(l.type==='number'){board=`<div class="board"><div class="target">${t('target')} ${l.target}</div><div class="number">${state.value}</div><div class="operations">${l.ops.map((op,i)=>`<button data-action="operation" data-index="${i}" ${limit?'disabled':''}>${op[0]}</button>`).join('')}</div><div class="history">${t('move')} ${moveCount()} / ${l.max}<br>${l.start}${state.history.map(h=>' → '+l.ops[h.index][0]+' → '+h.after).join('')}</div></div>`;}
+else{board=`<ul class="clues">${l.rules.map(r=>'<li>'+clue(r)+'</li>').join('')}</ul><div class="board"><div class="slots">${[...l.items].map((_,i)=>`<div><button class="slot" data-action="remove" data-index="${i}" ${won||!state.cards[i]?'disabled':''} aria-label="${state.cards[i]?t('remove')+' '+state.cards[i]:t('empty')}">${state.cards[i]||'·'}</button><small>${i+1}</small></div>`).join('')}</div><div class="pool">${[...l.items].map(c=>`<button data-action="card" data-card="${c}" ${won||state.cards.includes(c)?'disabled':''}>${c}</button>`).join('')}</div></div><button class="primary full" data-action="check" ${won||state.cards.length!==l.items.length?'disabled':''}>${t('check')}</button>`;}
+app.innerHTML=header()+`<div class="row"><button class="secondary" data-action="home">← ${t('back')}</button><small>${current==='daily'?t('daily')+' · '+l.date:t('level')+' '+(current+1)+' / 20'}</small></div><div class="progress"><div style="width:${current==='daily'?100:(current+1)*5}%"></div></div><div class="eyebrow">${current==='daily'?t('daily'):difficulty(current)} · ${kind(l)}</div><h2>${text(l.title)}</h2><p class="rule">${t(l.type+'Rule')}</p>${l.type==='order'?'':`<div class="tags"><span>${t('max')}: ${l.max}</span><span>${t('start')}: ${l.type==='number'?l.start:Array.from({length:l.n},(_,i)=>l.start&(1<<i)?i+1:null).filter(Boolean).join(', ')||'—'}</span></div>`}${board}<div class="status ${noticeKind}" role="status" aria-live="polite">${t(notice||'ready')}</div><div class="actions"><button data-action="undo" ${won||!state.history.length?'disabled':''}>↶ ${t('undo')}</button><button data-action="reset">↻ ${t('reset')}</button><button data-action="hint" ${hints>=l.hints.length?'disabled':''}>${t('hint')} ${hints}/${l.hints.length}</button></div>${l.hints.slice(0,hints).map((h,i)=>`<div class="hint"><strong>${t('hint')} ${i+1}</strong><br>${text(h)}</div>`).join('')}${won||reveal?`<div class="solution"><strong>${t(won?'logic':'sample')}</strong><p>${solutionHtml(l)}</p>${text(l.why)}${won?'':'<p>'+t('spoilerNote')+'</p>'}</div>`:`<button class="secondary full" data-action="reveal">${t('reveal')}</button>`}${won?`<button class="primary full" data-action="${current==='daily'?'home':current===19?'finish':'next'}">${t(current==='daily'?'back':current===19?'finish':'next')} →</button>`:''}${current==='daily'&&l.date!==dateKey()?`<p class="warning">${t('midnight')}</p>`:''}${storageNote()}`;}
+function finish(){screen='finish';state=null;renderFinish();}
+function renderFinish(){app.innerHTML=header()+`<section class="card hero"><div class="eyebrow">${completed.length} / 20 ${t('done')}</div><h1>${completed.length===20?t('final'):t('levels')}</h1><p>${t('finalText')}</p><button class="primary full" data-action="home">${t('back')} →</button><button class="full" data-action="daily">${t('daily')} →</button></section>`;}
+function redraw(){document.documentElement.lang=lang;document.title='MindTrap — '+t('subtitle');if(screen==='home')renderHome();else if(screen==='game')renderGame();else renderFinish();}
+function act(action,index,card,chosenLang){
+if(action==='lang'){lang=chosenLang==='en'?'en':'tr';persist();redraw();return;}
+if(action==='home'){home();return;}if(action==='daily'){start('daily');return;}
+if(action==='continue'){const next=levels.findIndex((_,i)=>!completed.includes(i));start(next<0?0:next);return;}
+if(action==='open'){if(Number.isInteger(index)&&index>=0&&index<20)start(index);return;}
+if(!state)return;const l=active();
+if(action==='reset'){start(current);return;}if(action==='next'){if(current!=='daily'&&current<19)start(current+1);return;}if(action==='finish'){finish();return;}
+if(action==='hint'){hints=Math.min(hints+1,l.hints.length);renderGame();return;}if(action==='reveal'){reveal=true;renderGame();return;}if(won)return;
+notice='';noticeKind='';
+if(action==='undo'){const h=state.history.pop();if(h){if(l.type==='order')state.cards=h.before;else state.value=h.before;}}
+else if(action==='card'&&l.type==='order'&&l.items.includes(card)&&!state.cards.includes(card)){state.history.push({before:[...state.cards]});state.cards.push(card);}
+else if(action==='remove'&&l.type==='order'&&state.cards[index]){state.history.push({before:[...state.cards]});state.cards.splice(index,1);}
+else if(action==='check'&&l.type==='order'&&state.cards.length===l.items.length){if(l.rules.every(r=>checkRule(state.cards,r)))win();else{notice='wrong';noticeKind='warning';}}
+else if((action==='switch'&&l.type==='light')||(action==='operation'&&l.type==='number')){const options=l.masks||l.ops;if(moveCount()>=l.max||!Number.isInteger(index)||index<0||index>=options.length)return;const before=state.value;state.value=l.type==='light'?before^l.masks[index]:l.ops[index][1](before);state.history.push({index,before,after:state.value});if(reached())win();else if(moveCount()===l.max){notice='limit';noticeKind='warning';}}
+renderGame();}
+app.addEventListener('click',e=>{const b=e.target.closest('button[data-action]');if(b&&!b.disabled)act(b.dataset.action,Number(b.dataset.index),b.dataset.card,b.dataset.lang);});
+let lastRenderedDate=dateKey();function refreshDate(){const key=dateKey();if(key!==lastRenderedDate){lastRenderedDate=key;redraw();}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshDate();});setInterval(refreshDate,30000);
+redraw();
+</script></body></html>
